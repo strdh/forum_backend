@@ -14,7 +14,7 @@ func init() {
     config.InitializeTestDB()
 }
 
-func TestCreateUser(t *testing.T) {
+func TestUserCreate(t *testing.T) {
     _, err := config.DB.Exec("TRUNCATE TABLE users")
     if err != nil {
         t.Error(err)
@@ -35,7 +35,7 @@ func TestCreateUser(t *testing.T) {
         Created: time.Now().Unix(),
     }
 
-    id, err := userModel.CreateUser(user)
+    id, err := userModel.Create(user)
     if err != nil {
         t.Error(err)
     }
@@ -43,7 +43,7 @@ func TestCreateUser(t *testing.T) {
     assert.Equal(t, int64(1), id)
 }
 
-func TestGetUserByUsername1(t *testing.T) {
+func TestUserByUsername(t *testing.T) {
     userModel := models.UserModel{}
 
     _, err := config.DB.Exec("TRUNCATE TABLE users")
@@ -69,7 +69,7 @@ func TestGetUserByUsername1(t *testing.T) {
         t.Error(err)
     }
 
-    result, err := userModel.GetUserByUsername("testusername")
+    result, err := userModel.ByUsername("testusername")
     if err != nil {
         t.Error(err)
     }    
@@ -82,7 +82,7 @@ func TestGetUserByUsername1(t *testing.T) {
     assert.Equal(t, user.Created, result.Created)
 }
 
-func TestGetUserByUsername2(t *testing.T) {
+func TestUserByUsername2(t *testing.T) {
     userModel := models.UserModel{}
 
     _, err := config.DB.Exec("TRUNCATE TABLE users")
@@ -108,13 +108,13 @@ func TestGetUserByUsername2(t *testing.T) {
         t.Error(err)
     }
 
-    result, err := userModel.GetUserByUsername("wrongusername")
+    result, err := userModel.ByUsername("wrongusername")
 
     assert.Equal(t, models.User{}, result)
     assert.Equal(t, err, errors.New("User not found"))
 }
 
-func TestUpdateUser(t *testing.T) {
+func TestUserUpdate(t *testing.T) {
     userModel := models.UserModel{}
 
     _, err := config.DB.Exec("TRUNCATE TABLE users")
@@ -147,12 +147,12 @@ func TestUpdateUser(t *testing.T) {
         Avatar: "testavatarupdate",
     }
 
-    result, err := userModel.UpdateUser(userUpdated, 1)
+    result, err := userModel.Update(userUpdated, 1)
     if err != nil {
         t.Error(err)
     }
 
-    dataUpdated, err := userModel.GetUserByUsername("testusernameupdate")
+    dataUpdated, err := userModel.ByUsername("testusernameupdate")
 
     assert.Equal(t, int64(1), result)
     assert.Equal(t, userUpdated.Username, dataUpdated.Username)
@@ -161,7 +161,7 @@ func TestUpdateUser(t *testing.T) {
     assert.Equal(t, userUpdated.Avatar, dataUpdated.Avatar)
 }
 
-func TestDeleteUser(t *testing.T) {
+func TestUserDelete(t *testing.T) {
     userModel := models.UserModel{}
 
     _, err := config.DB.Exec("TRUNCATE TABLE users")
@@ -187,7 +187,7 @@ func TestDeleteUser(t *testing.T) {
         t.Error(err)
     }
 
-    result, err := userModel.DeleteUser(1)
+    result, err := userModel.Delete(1)
     if err != nil {
         t.Error(err)
     }

@@ -19,8 +19,8 @@ type User struct {
 
 type UserModel struct {}
 
-func (userModel *UserModel) CreateUser(user User) (int64, error) {
-    result, err := config.DB.Exec("INSERT INTO users (user_uuid, username, email, password, avatar, status, created) VALUES(?, ?, ?, ?, ?, ?, ?)", user.UserUUID, user.Username, user.Email, user.Password, user.Created, user.Avatar, user.Status)
+func (userModel *UserModel) Create(user User) (int64, error) {
+    result, err := config.DB.Exec("INSERT INTO users (user_uuid, username, email, password, created, avatar, status) VALUES(?, ?, ?, ?, ?, ?, ?)", user.UserUUID, user.Username, user.Email, user.Password, user.Created, user.Avatar, user.Status)
     if err != nil {
         log.Println(err)
     }
@@ -33,7 +33,7 @@ func (userModel *UserModel) CreateUser(user User) (int64, error) {
     return id, nil
 }
 
-func (userModel *UserModel) GetUserByUsername(username string) (User, error) {
+func (userModel *UserModel) ByUsername(username string) (User, error) {
     var user User
     rows, err := config.DB.Query("SELECT * FROM users WHERE username = ?", username)
     if err != nil {
@@ -53,7 +53,7 @@ func (userModel *UserModel) GetUserByUsername(username string) (User, error) {
     return user, errors.New("User not found")
 }
 
-func (userModel *UserModel) UpdateUser(user User, id int) (int64, error) {
+func (userModel *UserModel) Update(user User, id int) (int64, error) {
     result, err := config.DB.Exec("UPDATE users SET username = ?, email = ?, password = ?, avatar = ? WHERE id = ?", user.Username, user.Email, user.Password, user.Avatar, id)
     if err != nil {
         log.Println(err)
@@ -67,7 +67,7 @@ func (userModel *UserModel) UpdateUser(user User, id int) (int64, error) {
     return rowsAffected, nil
 }
 
-func (userModel *UserModel) DeleteUser(id int) (int64, error) {
+func (userModel *UserModel) Delete(id int) (int64, error) {
     result, err := config.DB.Exec("DELETE FROM users WHERE id = ?", id)
     if err != nil {
         log.Println(err)

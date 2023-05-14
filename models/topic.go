@@ -9,12 +9,12 @@ import (
 type Topic struct {
     Id int `json:"id,omitempty"`
     Topic string `json:"topic,omitempty"`
-    Created int `json:"created,omitempty"`
+    Created int64 `json:"created,omitempty"`
 }
 
 type TopicModel struct {}
 
-func (topicModel *TopicModel) GetTopics() []Topic {
+func (topicModel *TopicModel) Topics() []Topic {
     var topics []Topic
     var temp Topic
 
@@ -36,7 +36,7 @@ func (topicModel *TopicModel) GetTopics() []Topic {
     return topics
 }
 
-func (topicModel *TopicModel) CreateTopic(topic Topic) (int64, error) {
+func (topicModel *TopicModel) Create(topic Topic) (int64, error) {
     result, err := config.DB.Exec("INSERT INTO topics (topic, created) VALUES (?, ?)", topic.Topic, topic.Created)
     if err != nil {
         log.Println(err)
@@ -50,7 +50,7 @@ func (topicModel *TopicModel) CreateTopic(topic Topic) (int64, error) {
     return id, nil
 }
 
-func (topicModel *TopicModel) GetTopicById(id int) (Topic, error) {
+func (topicModel *TopicModel) ById(id int) (Topic, error) {
     var topic Topic
     rows, err := config.DB.Query("SELECT * FROM topics WHERE id = ?", id)
     if err != nil {
@@ -70,22 +70,30 @@ func (topicModel *TopicModel) GetTopicById(id int) (Topic, error) {
     return topic, errors.New("Topic not found")
 }
 
-func (topicModel *TopicModel) UpdateTopic(topic Topic, id int) (Topic, error) {
-    _, err := config.DB.Exec("UPDATE topics SET topic = ? WHERE id = ?", topic.Topic, id)
+func (topicModel *TopicModel) Update(topic Topic, id int) (int64, error) {
+    result, err := config.DB.Exec("UPDATE topics SET topic = ? WHERE id = ?", topic.Topic, id)
     if err != nil {
         log.Println(err)
-        return topic, errors.New("Update has failed: " + err.Error())
     }
 
-    return topic, nil
+    rowsAffected, err := result.RowsAffected()
+    if err != nil {
+        return 0, err
+    }
+
+    return rowsAffected, nil
 }
 
-func (topicModel *TopicModel) DeleteTopic(id int) error {
-    _, err := config.DB.Exec("DELETE FROM topics WHERE id = ?", id)
+func (topicModel *TopicModel) Delete(id int) (int64, error) {
+    result, err := config.DB.Exec("DELETE FROM topics WHERE id = ?", id)
     if err != nil {
         log.Println(err)
-        return errors.New("Delete has failed: "+ err.Error())
     }
 
-    return nil
+    rowsAffected, err := result.RowsAffected()
+    if err != nil {
+        return 0, err
+    }
+
+    return rowsAffected, nil
 }
