@@ -9,6 +9,7 @@ import (
     "xyzforum/config"
     "xyzforum/models"
     "xyzforum/handlers"
+    "xyzforum/validators"
     "github.com/joho/godotenv"
     // "github.com/google/uuid"
     // _"github.com/go-sql-driver/mysql"
@@ -23,6 +24,7 @@ func main() {
     config.InitializeTestDB()
     authHandler := handlers.AuthHandler{
         UserModel: &models.UserModel{},
+        AuthValidator: &validators.AuthValidator{},
     }
 
     mux := http.NewServeMux()

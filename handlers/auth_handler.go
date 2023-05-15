@@ -1,29 +1,25 @@
 package handlers
 
 import (
-    // "fmt"
+    "os"
     "time"
-    "encoding/json"
-    "io/ioutil"
     "net/http"
-    "xyzforum/models"
+    "io/ioutil"
+    "encoding/json"
     "xyzforum/utils"
+    "xyzforum/models"
+    "xyzforum/validators"
     "github.com/google/uuid"
     "golang.org/x/crypto/bcrypt"
 )
 
-type loginRequest struct {
-    Username string `json:"username"`
-    Password string `json:"password"`
-}
-
 type loginResponse struct {
-    User models.User `json:"user"`
     Token string `json:"token"`
 }
 
 type AuthHandler struct {
     UserModel *models.UserModel
+    AuthValidator *validators.AuthValidator
 }
 
 func hashPassword(password string) (string, error) {
@@ -52,28 +48,37 @@ func (handler *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
     }
     defer r.Body.Close()
 
-    user := models.User{}
-    err = json.Unmarshal(body, &user)
+    registerRequest := validators.RegisterRequest{}
+    err = json.Unmarshal(body, &registerRequest)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+
+    isValid, messages := handler.AuthValidator.ValidateRegister(registerRequest)
+    if !isValid {
+        utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", messages)
         return
     }
 
     //fill the data
     userUUID := uuid.New()
     binaryUUID, _ := userUUID.MarshalBinary()
-
-    password, err := hashPassword(user.Password)
+    password, err := hashPassword(registerRequest.Password)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
         return
     }
 
-    user.UserUUID = binaryUUID
-    user.Password = password
-    user.Created = time.Now().Unix()
-    user.Avatar = "default.png"
-    user.Status = 1
+    user := models.User{
+        UserUUID: binaryUUID,
+        Username: registerRequest.Username,
+        Email: registerRequest.Email,
+        Password: password,
+        Created: time.Now().Unix(),
+        Avatar: "default.png",
+        Status: 1,
+    }
 
     id, err := handler.UserModel.Create(user)
     if err != nil {
@@ -99,10 +104,16 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
     }
     defer r.Body.Close()
 
-    loginRequest := loginRequest{}
+    loginRequest := validators.LoginRequest{}
     err = json.Unmarshal(body, &loginRequest)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+
+    isValid, messages := handler.AuthValidator.ValidateLogin(loginRequest)
+    if !isValid {
+        utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", messages)
         return
     }
 
@@ -117,14 +128,15 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+    jwtToken := utils.GenerateToken(user, os.Getenv("JWT_KEY"))
+
     loginResponse := loginResponse{
-        User: user,
-        Token: "ExampleToken",
+        Token: jwtToken,
     }
 
     utils.WriteResponse(w, r, http.StatusOK, "Login success", loginResponse)
 }
 
-// func (handler *AuthHandler) Logout(w http.ResponseWriter, r *http.Request) {
+func (handler *AuthHandler) CheckJWT(w http.ResponseWriter, r *http.Request) {
     
-// }
+}
