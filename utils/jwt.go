@@ -1,8 +1,11 @@
 package utils
 
 import (
-    "encoding/json"
-    "net/http"
+    "fmt"
+    "time"
+    "github.com/golang-jwt/jwt"
+    // "encoding/json"
+    // "net/http"
 )
 
 //func for generate a jwt token
