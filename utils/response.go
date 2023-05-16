@@ -13,10 +13,11 @@ type Response struct {
 
 func WriteResponse(w http.ResponseWriter, r *http.Request, status int, message string, data interface{}) {
     w.Header().Set("Content-Type", "application/json")
-    response := Response{}
-    response.Message = message
-    response.Data = data
-    response.Status = status
+    response := Response{
+        Status: status,
+        Message: message,
+        Data: data,
+    }
 
     jsonData, err := json.Marshal(response)
     if err != nil {

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-    "log"
     "time"
     "strconv"
     "net/http"
@@ -94,7 +93,6 @@ func (handler *ForumHandler) ById(w http.ResponseWriter, r *http.Request) {
 
     param, _ := strconv.Atoi(id) 
     forum, err := handler.ForumModel.ById(param)
-    log.Println(param)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
         return
@@ -130,6 +128,7 @@ func (handler *ForumHandler) Update(w http.ResponseWriter, r *http.Request) {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
         return
     }
+    r.Body.Close()
 
     request := validators.ForumRequest{}
     err = json.Unmarshal(body, &request)

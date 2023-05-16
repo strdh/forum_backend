@@ -8,7 +8,7 @@ import (
 
 type Forum struct {
     Id int `json:"id,omitempty"`
-    IdUser int `json:"id,omitempty"`
+    IdUser int `json:"id_user,omitempty"`
     Title string `json:"title,omitempty"`
     Slug []byte `json:"slug,omitempty"`
     Description string `json:"description,omitempty"`
@@ -84,6 +84,7 @@ func (forumModel *ForumModel) IsOwned(id int, idActor int) bool {
     if err != nil {
         log.Println(err)
     }
+    defer rows.Close()
 
     if rows.Next() {
         err := rows.Scan(&idUser)

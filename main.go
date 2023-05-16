@@ -31,6 +31,11 @@ func main() {
         ForumValidator: &validators.ForumValidator{},
     }
 
+    messageHandler := handlers.MessageHandler{
+        MessageModel: &models.MessageModel{},
+        MessageValidator: &validators.MessageValidator{},
+    }
+
     router := mux.NewRouter()
     router.HandleFunc("/register", authHandler.Register)
     router.HandleFunc("/login", authHandler.Login)
@@ -41,16 +46,15 @@ func main() {
     router.HandleFunc("/forums/{id}", middleware.AuthMiddleware(forumHandler.Update)).Methods("PUT")
     router.HandleFunc("/forums/{id}", middleware.AuthMiddleware(forumHandler.Delete)).Methods("DELETE")
 
-    // router.HandleFunc("/forums/{id}", forumHandler.ById).Methods("GET")
-    // router.HandleFunc("/forums/{id}", forumHandler.Update).Methods("PUT")
-    // router.HandleFunc("/forums/{id}", forumHandler.Delete).Methods("DELETE")
+    router.HandleFunc("/forums/{id_forum}/messages", messageHandler.ByIdForum).Methods("GET")
+    router.HandleFunc("/forums/{id_forum}/messages", middleware.AuthMiddleware(messageHandler.Create)).Methods("POST")
 
     server := http.Server{
         Addr: os.Getenv("ADDRESS"),
         Handler: router,
     }
 
-    fmt.Println("Server running on port 5000")
+    fmt.Println("Server running at: ", os.Getenv("ADDRESS"))
     err = server.ListenAndServe()
     if err != nil {
         panic(err)
