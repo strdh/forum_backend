@@ -43,7 +43,7 @@ func (forumModel *ForumModel) Forums() []Forum {
 }
 
 func (forumModel *ForumModel) Create(forum Forum) (int64, error) {
-    result, err := config.DB.Exec("INSERT INTO forums (id_user, title, description, slug) VALUES (?, ?, ?, ?)", forum.IdUser, forum.Title, forum.Slug, forum.Description)
+    result, err := config.DB.Exec("INSERT INTO forums (id_user, title, slug, description, active_users, messages, status, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", forum.IdUser, forum.Title, forum.Slug, forum.Description, forum.ActiveUsers, forum.Messages, forum.Status, forum.Created)
     if err != nil {
         log.Println(err)
     }
@@ -74,6 +74,29 @@ func (forumModel *ForumModel) ById(id int) (Forum, error) {
     }
 
     return forum, errors.New("Forum not found")
+}
+
+func (forumModel *ForumModel) IsOwned(id int, idActor int) bool {
+    result := false
+    var idUser int
+
+    rows, err := config.DB.Query("SELECT id_user FROM forums WHERE id = ?", id)
+    if err != nil {
+        log.Println(err)
+    }
+
+    if rows.Next() {
+        err := rows.Scan(&idUser)
+        if err != nil {
+            log.Println(err)
+        }
+    }
+
+    if idUser == idActor {
+        result = true
+    } 
+
+    return result
 }
 
 func (forumModel *ForumModel) Update(forum Forum, id int) (int64, error) {

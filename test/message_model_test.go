@@ -6,10 +6,15 @@ import (
     "errors"
     "xyzforum/config"
     "xyzforum/models"
+    "github.com/joho/godotenv"
     "github.com/stretchr/testify/assert"
 )
 
 func init() {
+    err := godotenv.Load("../.env")
+    if err != nil {
+        panic(err)
+    }
     config.InitializeTestDB()
 }
 
