@@ -12,35 +12,37 @@ import (
     "github.com/gorilla/mux"
 )
 
-type ReportForumHandler struct {
-    ReportForumModel *models.ReportForumModel
-    ReportForumValidator *validators.ReportForumValidator
+type ReportMessageHandler struct {
+    ReportMessageModel *models.ReportMessageModel
+    ReportMessageValidator *validators.ReportMessageValidator
 }
 
-func (handler *ReportForumHandler) Create(w http.ResponseWriter, r *http.Request) {
+func (handler *ReportMessageHandler) Create(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
-        return
+        return 
     }
 
-    idForum := mux.Vars(r)["id"]
+    idForum := mux.Vars(r)["id_forum"]
     if idForum == "" {
         utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", nil)
         return
     }
     finalIdForum, _ := strconv.Atoi(idForum)
 
-    idOwner := handler.ReportForumModel.GetIdOwner(finalIdForum)
-    if idOwner == 0 {
+    idMessage := mux.Vars(r)["id"]
+    if idMessage == "" {
         utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", nil)
         return
     }
+    finalIdMessage, _ := strconv.Atoi(idMessage)
 
     idReporter := r.Context().Value("userId").(float64)
     finalIdReporter := int(idReporter)
 
-    if finalIdReporter == idOwner {
-        utils.WriteResponse(w, r, http.StatusForbidden, "Foribidden", nil)
+    idForumReal, idOwner := handler.ReportMessageModel.GetIdFO(finalIdMessage)
+    if idForumReal != finalIdForum || idOwner == finalIdReporter  {
+        utils.WriteResponse(w, r, http.StatusForbidden, "Forbidden", nil)
         return
     }
 
@@ -51,34 +53,34 @@ func (handler *ReportForumHandler) Create(w http.ResponseWriter, r *http.Request
     }
     defer r.Body.Close()
 
-    reportForumRequest := validators.ReportForumRequest{}
-    err = json.Unmarshal(body, &reportForumRequest)
+    reportMessageRequest := validators.ReportMessageRequest{}
+    err = json.Unmarshal(body, &reportMessageRequest)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
         return
     }
 
-    isValid, messages := handler.ReportForumValidator.Validate(reportForumRequest)
+    isValid, messages := handler.ReportMessageValidator.Validate(reportMessageRequest)
     if !isValid {
         utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", messages)
         return
     }
 
-    reportForum := models.ReportForum{
-        IdForum: finalIdForum,
+    reportMessage := models.ReportMessage{
+        IdMessage: finalIdMessage,
         IdOwner: idOwner,
         IdReporter: finalIdReporter,
-        Problem: reportForumRequest.Problem,
+        Problem: reportMessageRequest.Problem,
         Created: time.Now().Unix(),
         Updated: time.Now().Unix(),
         Status: 0,
     }
 
-    _, err = handler.ReportForumModel.Create(reportForum)
+    _, err = handler.ReportMessageModel.Create(reportMessage)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
         return
     }
 
-    utils.WriteResponse(w, r, http.StatusOK, "success", reportForum)
+    utils.WriteResponse(w, r, http.StatusCreated, "success", reportMessage)
 }

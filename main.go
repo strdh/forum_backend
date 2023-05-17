@@ -41,6 +41,11 @@ func main() {
         MessageValidator: &validators.MessageValidator{},
     }
 
+    reportMessageHandler := handlers.ReportMessageHandler{
+        ReportMessageModel: &models.ReportMessageModel{},
+        ReportMessageValidator: &validators.ReportMessageValidator{},
+    }
+
     router := mux.NewRouter()
     router.HandleFunc("/register", authHandler.Register)
     router.HandleFunc("/login", authHandler.Login)
@@ -56,6 +61,7 @@ func main() {
     router.HandleFunc("/forums/{id_forum}/messages", middleware.AuthMiddleware(messageHandler.Create)).Methods("POST")
     router.HandleFunc("/forums/{id_forum}/messages/{id}", middleware.AuthMiddleware(messageHandler.Update)).Methods("PUT")
     router.HandleFunc("/forums/{id_forum}/messages/{id}", middleware.AuthMiddleware(messageHandler.Delete)).Methods("DELETE")
+    router.HandleFunc("/forums/{id_forum}/messages/{id}/report", middleware.AuthMiddleware(reportMessageHandler.Create)).Methods("POST")
 
     server := http.Server{
         Addr: os.Getenv("ADDRESS"),

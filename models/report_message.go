@@ -138,6 +138,20 @@ func (reportMessageModel *ReportMessageModel) ByIdReporter(IdReporter int) []Rep
     return reportMessages
 }
 
+//Get forum id of message and id user of message
+func (reportMessageModel *ReportMessageModel) GetIdFO(id int) (int, int) {
+    var idForum int
+    var idOwner int
+
+    err := config.DB.QueryRow("SELECT id_forum, id_user FROM forum_messages WHERE id = ?", id).Scan(&idForum, &idOwner)
+    if err != nil {
+        log.Println(err)
+        return 0, 0
+    }
+
+    return idForum, idOwner
+}
+
 func (reportMessageModel *ReportMessageModel) Update(id int, status int) error {
     _, err := config.DB.Exec("UPDATE report_messages SET status = ? WHERE id = ?", status, id)
     if err != nil {
