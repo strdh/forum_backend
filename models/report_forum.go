@@ -138,6 +138,20 @@ func (reportForumModel *ReportForumModel) ByIdReporter(IdReporter int) []ReportF
     return reportForums
 }
 
+//get id owner forum
+func (reportForumModel *ReportForumModel) GetIdOwner(id int) int {
+    var idOwner int
+
+    err := config.DB.QueryRow("SELECT id_user FROM forums WHERE id = ?", id).Scan(&idOwner)
+
+    if err != nil {
+        log.Println(err)
+        return 0
+    }
+
+    return idOwner
+}
+
 func (reportForumModel *ReportForumModel) Update(id int, updated int64) (int64, error) {
     result, err := config.DB.Exec("UPDATE report_forums SET updated = ?, status = 1 WHERE id = ?", updated, id)
     if err != nil {

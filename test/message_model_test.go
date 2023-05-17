@@ -1,9 +1,9 @@
 package test
 
 import (
-    "testing"
     "time"
     "errors"
+    "testing"
     "xyzforum/config"
     "xyzforum/models"
     "github.com/joho/godotenv"
@@ -158,7 +158,7 @@ func TestMessageDelete(t *testing.T) {
         t.Error(err)
     }
 
-    result, err := messageModel.Delete(1)
+    result, err := messageModel.Delete(1, 1)
     if err != nil {
         t.Error(err)
     }

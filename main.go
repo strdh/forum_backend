@@ -31,6 +31,11 @@ func main() {
         ForumValidator: &validators.ForumValidator{},
     }
 
+    reportForumHandler := handlers.ReportForumHandler{
+        ReportForumModel: &models.ReportForumModel{},
+        ReportForumValidator: &validators.ReportForumValidator{},
+    }
+
     messageHandler := handlers.MessageHandler{
         MessageModel: &models.MessageModel{},
         MessageValidator: &validators.MessageValidator{},
@@ -45,6 +50,7 @@ func main() {
     router.HandleFunc("/forums", middleware.AuthMiddleware(forumHandler.Create)).Methods("POST")
     router.HandleFunc("/forums/{id}", middleware.AuthMiddleware(forumHandler.Update)).Methods("PUT")
     router.HandleFunc("/forums/{id}", middleware.AuthMiddleware(forumHandler.Delete)).Methods("DELETE")
+    router.HandleFunc("/forums/{id}/report", middleware.AuthMiddleware(reportForumHandler.Create)).Methods("POST")
 
     router.HandleFunc("/forums/{id_forum}/messages", messageHandler.ByIdForum).Methods("GET")
     router.HandleFunc("/forums/{id_forum}/messages", middleware.AuthMiddleware(messageHandler.Create)).Methods("POST")
