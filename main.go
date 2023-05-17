@@ -48,6 +48,8 @@ func main() {
 
     router.HandleFunc("/forums/{id_forum}/messages", messageHandler.ByIdForum).Methods("GET")
     router.HandleFunc("/forums/{id_forum}/messages", middleware.AuthMiddleware(messageHandler.Create)).Methods("POST")
+    router.HandleFunc("/forums/{id_forum}/messages/{id}", middleware.AuthMiddleware(messageHandler.Update)).Methods("PUT")
+    router.HandleFunc("/forums/{id_forum}/messages/{id}", middleware.AuthMiddleware(messageHandler.Delete)).Methods("DELETE")
 
     server := http.Server{
         Addr: os.Getenv("ADDRESS"),
