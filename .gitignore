@@ -1,4 +1,3 @@
 /db_control.go
-/config/database.go
 /.env
 /insert_dummy.go

@@ -19,7 +19,8 @@ func main() {
         panic(err)
     }
 
-    config.InitializeTestDB()
+    // config.InitializeTestDB()
+    config.InitializeDB()
 
     authHandler := handlers.AuthHandler{
         UserModel: &models.UserModel{},
@@ -47,9 +48,10 @@ func main() {
     }
 
     router := mux.NewRouter()
-    router.HandleFunc("/register", authHandler.Register)
-    router.HandleFunc("/login", authHandler.Login)
-    // router.HandleFunc("/profile", authHandler.Profile)
+    
+    router.HandleFunc("/register", authHandler.Register).Methods("POST")
+    router.HandleFunc("/login", authHandler.Login).Methods("POST")
+    router.HandleFunc("/profile/{username}", middleware.AuthMiddleware(authHandler.Profile)).Methods("GET")
 
     router.HandleFunc("/forums", forumHandler.Forums).Methods("GET")
     router.HandleFunc("/forums", middleware.AuthMiddleware(forumHandler.Create)).Methods("POST")

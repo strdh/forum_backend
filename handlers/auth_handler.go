@@ -10,6 +10,7 @@ import (
     "xyzforum/models"
     "xyzforum/validators"
     "github.com/google/uuid"
+    "github.com/gorilla/mux"
     "golang.org/x/crypto/bcrypt"
 )
 
@@ -137,6 +138,36 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
     utils.WriteResponse(w, r, http.StatusOK, "Login success", loginResponse)
 }
 
-func (handler *AuthHandler) CheckJWT(w http.ResponseWriter, r *http.Request) {
-    
+func (handler *AuthHandler) Profile(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
+        return
+    }
+
+    var user models.User
+    var forums []models.Forum
+    var messages []models.Message
+
+    username := mux.Vars(r)["username"]
+    user, err := handler.UserModel.ByUsername(username)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusNotFound, "User not found", nil)
+        return
+    }
+
+    forums = handler.UserModel.UserForums(user.Id)
+    messages = handler.UserModel.UserMessages(user.Id)
+
+    userProfile := models.UserProfile{
+        Id: user.Id,
+        Username: user.Username,
+        Email: user.Email,
+        Avatar: user.Avatar,
+        Created: user.Created,
+        Status: user.Status,
+        Forums: forums,
+        Messages: messages,
+    }
+
+    utils.WriteResponse(w, r, http.StatusOK, "Success", userProfile)
 }

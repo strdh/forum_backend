@@ -17,6 +17,17 @@ type User struct {
     Status int `json:"status,omitempty"`
 }
 
+type UserProfile struct {
+    Id int `json:"id"`
+    Username string `json:"username"`
+    Email string `json:"email"`
+    Avatar string `json:"avatar"`
+    Created int64 `json:"created"`
+    Status int `json:"status"`
+    Forums []Forum `json:"forums"`
+    Messages []Message `json:"messages"`
+}
+
 type UserModel struct {}
 
 func (userModel *UserModel) Create(user User) (int64, error) {
@@ -79,4 +90,48 @@ func (userModel *UserModel) Delete(id int) (int64, error) {
     }
 
     return rowsAffected, nil
+}
+
+func (userModel *UserModel) UserForums(idUser int) []Forum {
+    var forums []Forum
+    var temp Forum
+
+    rows, err := config.DB.Query("SELECT * FROM forums WHERE id_user = ?", idUser)
+    if err != nil {
+        log.Println(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err := rows.Scan(&temp.Id, &temp.IdUser, &temp.Title, &temp.Slug, &temp.Description, &temp.ActiveUsers, &temp.Messages, &temp.Status, &temp.Created)
+        if err != nil {
+            log.Println(err)
+        }
+
+        forums = append(forums, temp)
+    }
+
+    return forums
+}
+
+func (userModel *UserModel) UserMessages(idUser int) []Message {
+    var messages []Message
+    var temp Message
+
+    rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id_user = ?", idUser)
+    if err != nil {
+        log.Println(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err := rows.Scan(&temp.Id, &temp.IdForum, &temp.IdUser, &temp.Message, &temp.Created, &temp.Updated)
+        if err != nil {
+            log.Println(err)
+        }
+
+        messages = append(messages, temp)
+    }
+
+    return messages
 }
