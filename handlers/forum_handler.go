@@ -101,6 +101,36 @@ func (handler *ForumHandler) ById(w http.ResponseWriter, r *http.Request) {
     utils.WriteResponse(w, r, http.StatusOK, "Success", forum)
 }
 
+func (handler *ForumHandler) FindForum(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodPost {
+        utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
+        return
+    }
+
+    body, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+    defer r.Body.Close()
+
+    request := validators.SearchRequest{}
+    err = json.Unmarshal(body, &request)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+
+    isValid, errMsg := handler.ForumValidator.ValidateSearch(request)
+    if !isValid {
+        utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", errMsg)
+        return
+    }
+
+    forums := handler.ForumModel.FindForum(request.Search)
+    utils.WriteResponse(w, r, http.StatusOK, "Success", forums)
+}
+
 func (handler *ForumHandler) FindMsg(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
@@ -124,6 +154,12 @@ func (handler *ForumHandler) FindMsg(w http.ResponseWriter, r *http.Request) {
     err = json.Unmarshal(body, &request)
     if err != nil {
         utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+
+    isValid, errMsg := handler.ForumValidator.ValidateSearch(request)
+    if !isValid {
+        utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", errMsg)
         return
     }
 

@@ -76,6 +76,28 @@ func (forumModel *ForumModel) ById(id int) (Forum, error) {
     return forum, errors.New("Forum not found")
 }
 
+func (forumModel *ForumModel) FindForum(keyword string) []Forum {
+    var forums []Forum
+    var temp Forum
+
+    rows, err := config.DB.Query("SELECT * FROM forums WHERE title LIKE ?", "%"+keyword+"%")
+    if err != nil {
+        log.Println(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err := rows.Scan(&temp.Id, &temp.IdUser, &temp.Title, &temp.Slug, &temp.Description, &temp.ActiveUsers, &temp.Messages, &temp.Status, &temp.Created)
+        if err != nil {
+            log.Println(err)
+        }
+
+        forums = append(forums, temp)
+    }
+
+    return forums
+}
+
 func (forumModel *ForumModel) FindMsg(keyword string, idForum int) []Message {
     var messages []Message
     var temp Message
