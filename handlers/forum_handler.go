@@ -101,6 +101,36 @@ func (handler *ForumHandler) ById(w http.ResponseWriter, r *http.Request) {
     utils.WriteResponse(w, r, http.StatusOK, "Success", forum)
 }
 
+func (handler *ForumHandler) FindMsg(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodPost {
+        utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
+    }
+
+    id := mux.Vars(r)["id"]
+    if id == "" {
+        utils.WriteResponse(w, r, http.StatusBadRequest, "Bad request", nil)
+        return
+    }
+    finalId, _ := strconv.Atoi(id)
+
+    body, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+    defer r.Body.Close()
+
+    request := validators.SearchRequest{}
+    err = json.Unmarshal(body, &request)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusInternalServerError, "server error", nil)
+        return
+    }
+
+    messages := handler.ForumModel.FindMsg(request.Search, finalId)
+    utils.WriteResponse(w, r, http.StatusOK, "Success", messages)
+}
+
 func (handler *ForumHandler) Update(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPut {
         utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)

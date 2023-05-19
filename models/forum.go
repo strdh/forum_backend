@@ -76,6 +76,28 @@ func (forumModel *ForumModel) ById(id int) (Forum, error) {
     return forum, errors.New("Forum not found")
 }
 
+func (forumModel *ForumModel) FindMsg(keyword string, idForum int) []Message {
+    var messages []Message
+    var temp Message
+
+   rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id_forum = ? AND message LIKE ?", idForum, "%"+keyword+"%")
+    if err != nil {
+        log.Println(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err := rows.Scan(&temp.Id, &temp.IdForum, &temp.IdUser, &temp.Message, &temp.Created, &temp.Updated)
+        if err != nil {
+            log.Println(err)
+        }
+
+        messages = append(messages, temp)
+    }
+
+    return messages
+}
+
 func (forumModel *ForumModel) IsOwned(id int, idActor int) bool {
     result := false
     var idUser int
