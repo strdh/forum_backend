@@ -26,9 +26,15 @@ func (authValidator *AuthValidator) ValidateRegister(request RegisterRequest) (b
     if request.Username == "" || len(request.Username) < 3 {
         messages = append(messages, "Username is required and must be at least 3 characters")
     } else {
-        result, _ := config.DB.Query("SELECT username FROM users WHERE username = ?", request.Username)
-        if result.Next() {
-            messages = append(messages, "Username is already taken")
+        // Validate username format using regular expression
+        usernameRegex := regexp.MustCompile("^[a-z0-9_]+$")
+        if !usernameRegex.MatchString(request.Username) {
+            messages = append(messages, "Username must contain only lowercase letters, numbers[0-9], and underscores")
+        } else {
+            result, _ := config.DB.Query("SELECT username FROM users WHERE username = ?", request.Username)
+            if result.Next() {
+                messages = append(messages, "Username is already taken")
+            }
         }
     }
 
