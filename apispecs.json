@@ -14,20 +14,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "username": {
-                                        "type": "string",
-                                        "example": "user1"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "example@mail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password1"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/user_register_request"
                             }
                         }
                     }
@@ -39,37 +26,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "username": {
-                                                    "type": "string",
-                                                    "example": "user1"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "example": "example@mail.com"
-                                                }
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "User registered"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/user_register_succes_response"
                                 }
                             }
                         }
@@ -85,16 +42,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "username": {
-                                        "type": "string",
-                                        "example": "user1"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password1"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/user_login_request"
                             }
                         }
                     }
@@ -106,41 +54,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "username": {
-                                                    "type": "string",
-                                                    "example": "user1"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "example": "example@mail.com"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
-                                                }
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Login success"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/user_login_succes_response"
                                 }
                             }
                         }
@@ -182,60 +96,7 @@
                             "application/json": {
                                 "schema": {
                                     "type" : "object",
-                                    "properties" : {
-                                        "code" : {
-                                            "type" : "integer",
-                                            "example" : 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_user": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "title": {
-                                                        "type": "string",
-                                                        "example": "Forum salam olahraga"
-                                                    },
-                                                    "slug": {
-                                                        "type": "string",
-                                                        "example": "forum-salam-olahraga"
-                                                    },
-                                                    "description": {
-                                                        "type": "string",
-                                                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
-                                                    },
-                                                    "active_user": {
-                                                        "type": "integer",
-                                                        "example": 14500
-                                                    },
-                                                    "messages": {
-                                                        "type": "integer",
-                                                        "example": 14500
-                                                    },
-                                                    "created": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    },
-                                                    "status": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/getforums_success_response"
                                 }
                             }
                         }
@@ -250,20 +111,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "id_user": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Forum salam olahraga"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/createforum_request"
                             }
                         }
                     }
@@ -275,61 +123,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "id_user": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "title": {
-                                                    "type": "string",
-                                                    "example": "Forum salam olahraga"
-                                                },
-                                                "slug": {
-                                                    "type": "string",
-                                                    "example": "forum-salam-olahraga"
-                                                },
-                                                "description": {
-                                                    "type": "string",
-                                                    "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
-                                                },
-                                                "active_user": {
-                                                    "type": "integer",
-                                                    "example": 0
-                                                },
-                                                "messages": {
-                                                    "type": "integer",
-                                                    "example": 0
-                                                },
-                                                "created": {
-                                                    "type": "string",
-                                                    "example": "2021-01-01 00:00:00"
-                                                },
-                                                "status": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                }
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Forum created"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/createforum_success_response"
                                 }
                             }
                         }
@@ -359,57 +153,7 @@
                             "application/json": {
                                 "schema": {
                                     "type" : "object",
-                                    "properties" : {
-                                        "code" : {
-                                            "type" : "integer",
-                                            "example" : 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "id_user": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "title": {
-                                                    "type": "string",
-                                                    "example": "Forum salam olahraga"
-                                                },
-                                                "slug": {
-                                                    "type": "string",
-                                                    "example": "forum-salam-olahraga"
-                                                },
-                                                "description": {
-                                                    "type": "string",
-                                                    "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
-                                                },
-                                                "active_user": {
-                                                    "type": "integer",
-                                                    "example": 14500
-                                                },
-                                                "messages": {
-                                                    "type": "integer",
-                                                    "example": 14500
-                                                },
-                                                "created": {
-                                                    "type": "string",
-                                                    "example": "2021-01-01 00:00:00"
-                                                },
-                                                "status": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/getforumbyid_success_response"
                                 }
                             }
                         }
@@ -448,16 +192,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Forum salam olahraga"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/editforum_request"
                             }
                         }
                     }
@@ -481,61 +216,7 @@
                             "application/json": {
                                 "schema": {
                                     "type" : "object",
-                                    "properties" : {
-                                        "code" : {
-                                            "type" : "integer",
-                                            "example" : 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "id_user": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "title": {
-                                                    "type": "string",
-                                                    "example": "Forum salam olahraga"
-                                                },
-                                                "slug": {
-                                                    "type": "string",
-                                                    "example": "forum-salam-olahraga"
-                                                },
-                                                "description": {
-                                                    "type": "string",
-                                                    "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
-                                                },
-                                                "active_user": {
-                                                    "type": "integer",
-                                                    "example": 14500
-                                                },
-                                                "messages": {
-                                                    "type": "integer",
-                                                    "example": 14500
-                                                },
-                                                "created": {
-                                                    "type": "string",
-                                                    "example": "2021-01-01 00:00:00"
-                                                },
-                                                "status": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                }
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Forum updated"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/editforum_success_response"
                                 }
                             }
                         }
@@ -588,20 +269,7 @@
                             "application/json": {
                                 "schema": {
                                     "type" : "object",
-                                    "properties" : {
-                                        "code" : {
-                                            "type" : "integer",
-                                            "example" : 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Forum deleted"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/deleteforum_success_response"
                                 }
                             }
                         }
@@ -654,20 +322,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "id_user_owner": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "id_user_reporter": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "report": {
-                                        "type": "string",
-                                        "example": "Forum ini mengandung konten SARA"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/reportforum_request"
                             }
                         }
                     }
@@ -679,20 +334,7 @@
                             "application/json": {
                                 "schema":{
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Forum reported"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/reportforum_success_response"
                                 }
                             }
                         }
@@ -722,48 +364,7 @@
                             "application/json": {
                                 "schema": {
                                     "type" : "object",
-                                    "properties" : {
-                                        "code" : {
-                                            "type" : "integer",
-                                            "example" : 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_forum": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_user": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "message": {
-                                                        "type": "string",
-                                                        "example": "Salam olahraga, jaya jaya"
-                                                    },
-                                                    "created": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    },
-                                                    "updated": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/getmessages_byidforum_response"
                                 }
                             }
                         }
@@ -814,20 +415,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "id_forum": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "id_user": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "message": {
-                                        "type": "string",
-                                        "example": "Salam olahraga"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/sendmessage_request"
                             }
                         }
                     }
@@ -839,52 +427,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_forum": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_user": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "message": {
-                                                        "type": "string",
-                                                        "example": "Salam olahraga jaya jaya"
-                                                    },
-                                                    "created": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    },
-                                                    "updated": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Message sent"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/sendmessage_success_response"
                                 }
                             }
                         }
@@ -923,12 +466,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "message": {
-                                        "type": "string",
-                                        "example": "Salam olahraga jaya jaya bravo"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/editmessage_request"
                             }
                         }
                     }
@@ -940,52 +478,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "200"
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_forum": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id_user": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "message": {
-                                                        "type": "string",
-                                                        "example": "Salam olahraga jaya jaya bravo"
-                                                    },
-                                                    "created": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    },
-                                                    "updated": {
-                                                        "type": "string",
-                                                        "example": "2021-01-01 00:00:00"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Message updated"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/editmessage_success_response"
                                 }
                             }
                         }
@@ -1048,20 +541,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "200"
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Message deleted"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/deletemessage_succes_response"
                                 }
                             }
                         }
@@ -1124,20 +604,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "id_user_owner": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "id_user_reporter": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "report": {
-                                        "type": "string",
-                                        "example": "message ini mengandung konten SARA"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/reportmessage_request"
                             }
                         }
                     }
@@ -1149,20 +616,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "status": {
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Message reported"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/reportmessage_success_response"
                                 }
                             }
                         }
@@ -1178,6 +632,561 @@
                 "in": "header",
                 "name": "Authorization",
                 "description": "JWT token for forum API"
+            }
+        },
+        "schemas": {
+            "user_register_request": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "user1"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "example@mail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password-example"
+                    }
+                }
+            },
+            "user_register_succes_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "User registered"
+                    },
+                    "data" : {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "user_uuid" : {
+                                "type": "string",
+                                "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "user1"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "example@mail.com"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "********"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684763206  
+                            },
+                            "avatar": {
+                                "type": "string",
+                                "example": "default.png"
+                            },
+                            "status": {
+                                "type": "integer",
+                                "example": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "user_login_request": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "user1"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password-example"
+                    }
+                }
+            },
+            "user_login_succes_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Login success"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "type": "string",
+                                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ4NTAzODksImlhdCI6MTY4NDc2Mzk4OSwiaXNzIjoieHl6Zm9ydW0iLCJzdWIiOjJ9.rVDQjIN9P1EEYeqaMj7NU8_dB59eFGficQz4sm5mICY"
+                            }
+                        }
+                    }
+                }
+            },
+            "getforums_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "id_user": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "Forum salam olahraga"
+                                },
+                                "slug": {
+                                    "type": "string",
+                                    "example": "forum-salam-olahraga"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                                },
+                                "active_user": {
+                                    "type": "integer",
+                                    "example": 14500
+                                },
+                                "messages": {
+                                    "type": "integer",
+                                    "example": 14500
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "example": "2021-01-01 00:00:00"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "createforum_request": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Forum salam olahraga"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                    }
+                }
+            },
+            "createforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum created"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "id_user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "title": {
+                                "type": "string",
+                                "example": "Forum salam olahraga"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "forum-salam-olahraga"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                            },
+                            "created": {
+                                "type": "string",
+                                "example": "2021-01-01 00:00:00"
+                            }
+                        }
+                    }
+                }
+            },
+            "getforumbyid_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "id_user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "title": {
+                                "type": "string",
+                                "example": "Forum salam olahraga"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "forum-salam-olahraga"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                            },
+                            "active_user": {
+                                "type": "integer",
+                                "example": 14500
+                            },
+                            "messages": {
+                                "type": "integer",
+                                "example": 14500
+                            },
+                            "status": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created": {
+                                "type": "string",
+                                "example": "2021-01-01 00:00:00"
+                            }
+                        }
+                    }
+                }
+            },
+            "editforum_request": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Forum salam olahraga"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                    }
+                }
+            },
+            "editforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum updated"
+                    },
+                    "data": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "deleteforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum deleted"
+                    }
+                }
+            },
+            "reportforum_request": {
+                "type": "object",
+                "properties": {
+                    "problem": {
+                        "type": "string",
+                        "example": "This is inappropriate"
+                    }
+                }
+            },
+            "reportforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum reported"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id_forum": {
+                                "type": "integer",
+                                "example": 400
+                            },
+                            "id_owner": {
+                                "type": "integer",
+                                "example": 15
+                            },
+                            "id_reporter": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "problem": {
+                                "type": "string",
+                                "example": "This is inappropriate"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684769391
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684769391
+                            }
+                        }
+                    }
+                }
+            },
+            "getmessages_byidforum_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum reported"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1599
+                                },
+                                "id_forum": {
+                                    "type": "integer",
+                                    "example": 1259
+                                },
+                                "id_user": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Salam olahraga, jaya jaya"
+                                },
+                                "created": {
+                                    "type": "integer",
+                                    "example": 1684221096
+                                },
+                                "updated": {
+                                    "type": "integer",
+                                    "example": 1684221096
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "sendmessage_request": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Salam olahraga"
+                    }
+                }
+            },
+            "sendmessage_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id_forum": {
+                                "type": "integer",
+                                "example": 1259
+                            },
+                            "id_user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Salam olahraga"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684221096
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684221096
+                            }
+                        }
+                    }
+                }
+            },
+            "editmessage_request": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Salam olahraga jaya jaya bravo"
+                    }
+                }
+            }, 
+            "editmessage_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Message updated"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string",
+                                "example": "Salam olahraga jaya jaya bravo"
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684221096
+                            }
+                        }
+                    }
+                }
+            },
+            "deletemessage_succes_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Message deleted"
+                    }
+                }
+            },
+            "reportmessage_request": {
+                "type": "object",
+                "properties": {
+                    "problem": {
+                        "type": "string",
+                        "example": "This is inappropriate"
+                    }
+                }
+            },
+            "reportmessage_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Message reported"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id_message": {
+                                "type": "integer",
+                                "example": 1599
+                            },
+                            "id_owner": {
+                                "type": "integer",
+                                "example": 15
+                            },
+                            "id_reporter": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "problem": {
+                                "type": "string",
+                                "example": "This is inappropriate"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684769391
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684769391
+                            }
+                        }
+                    }
+                }
             }
         }
     }

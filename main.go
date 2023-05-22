@@ -55,6 +55,7 @@ func main() {
 
     router.HandleFunc("/forums", forumHandler.Forums).Methods("GET")
     router.HandleFunc("/forums", middleware.AuthMiddleware(forumHandler.Create)).Methods("POST")
+    router.HandleFunc("/forums/{id}", forumHandler.ById).Methods("GET")
     router.HandleFunc("/forums/{id}", middleware.AuthMiddleware(forumHandler.Update)).Methods("PUT")
     router.HandleFunc("/forums/{id}", middleware.AuthMiddleware(forumHandler.Delete)).Methods("DELETE")
     router.HandleFunc("/forums/search", forumHandler.FindForum).Methods("POST")
