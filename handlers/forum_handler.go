@@ -98,6 +98,11 @@ func (handler *ForumHandler) ById(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+    if forum == nil {
+        utils.WriteResponse(w, r, http.StatusNotFound, "Forum not found", nil)
+        return
+    }
+
     utils.WriteResponse(w, r, http.StatusOK, "Success", forum)
 }
 
