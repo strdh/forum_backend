@@ -14,13 +14,13 @@ Tech stack that I used for build this is
  
  Lib that I used on this project
  
-* [github.com/go-sql-driver/mysql](github.com/go-sql-driver/mysql)
-* [github.com/golang-jwt/jwt](github.com/golang-jwt/jwt)
-* [github.com/google/uuid](github.com/google/uuid)
-* [github.com/gorilla/mux](github.com/gorilla/mux)
-* [github.com/joho/godotenv](github.com/joho/godotenv)
-* [github.com/stretchr/testify](github.com/stretchr/testify)
-* [golang.org/x/crypto](golang.org/x/crypto)
+* [github.com/go-sql-driver/mysql](https://github.com/go-sql-driver/mysql)
+* [github.com/golang-jwt/jwt](https://github.com/golang-jwt/jwt)
+* [github.com/google/uuid](https://github.com/google/uuid)
+* [github.com/gorilla/mux](https://github.com/gorilla/mux)
+* [github.com/joho/godotenv](https://github.com/joho/godotenv)
+* [github.com/stretchr/testify](https://github.com/stretchr/testify)
+* [golang.org/x/crypto](https://pkg.go.dev/golang.org/x/crypto)
 
 [Go]: https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white
 [Go_URL]: https://go.dev/
