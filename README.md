@@ -88,5 +88,64 @@ Tech stack that I used for build this is
 Database on this REST API consists of 7 tables
 ![My Image](db_schema.png)
 
+## How to Use 
+* Download this repo or clone it by using `git clone https://github.com/strdh/forum_backend.git`
+* Create a database on mysql or use can use mariadb
+* Crate tables based on the schema or you can just import the sql file that provided in this repo
+* Create `.env` file on the root directory and you can see `.env.example`
+* adjust the the enviroment value in `.env` based on value on your system
+  * `ADDRESS=your_address` example `www.example.com`
+  * `JWT_KEY=your_jwtkey` this key is used for generate a JWT and verify that
+  * `DB_HOST=your_dbhost` example `localhost`
+  * `DB_PORT=your_dbport` example `3306`
+  * `DB_USERNAME=your_dbusername` example `root`
+  * `DB_PASSWORD=your_dbpassword` example `secret-password***&(*&*"`
+  * `DB_NAME=your_dbname` example `forum_db`
+  * `DB_TEST_NAME=your_dbtestname` this is needed if you wanna separate db test
+* run with `go run main.go`
 
+## Detail
+#### Dir structure
 
+```sh
+    forum_backend
+    |
+    |__config
+    |_____database.go
+    |__handlers
+    |_____auth_handler.go
+    |_____forum_handler.go
+    |_____message_handler.go
+    |_____report_forum_handler.go
+    |_____report_message_handler.go
+    |__models
+    |_____forum.go
+    |_____message.go
+    |_____report_forum.go
+    |_____report_message.go
+    |_____topic.go
+    |_____user.go
+    |__test
+    |_____test1.go
+    |_____test2.go
+    |_____testn.go
+    |__utils
+    |_____jwt.go
+    |_____response.go
+    |__validators
+    |_____auth.go
+    |_____forum.go
+    |_____message.go
+    |_____report_forum.go
+    |_____report_message.go
+    |__.env
+    |__.env.example
+    |__.gitignore
+    |__apispecs
+    |__go.mod
+    |__go.sum
+    |__main.go
+
+```
+
+  
