@@ -1,0 +1,1428 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Forum API",
+        "description": "This is a specification for forum API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/register": {
+            "post": {
+                "summary": "Register a user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/user_register_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/user_register_succes_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Login a user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/user_login_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/user_login_succes_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/401_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/forums":{
+            "get": {
+                "summary": "Get all forums",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type" : "object",
+                                    "$ref": "#/components/schemas/getforums_success_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Create a forum",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/createforum_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/createforum_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/forums/{id_forum}": {
+            "get": {
+                "summary": "Get a forum by id",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type" : "object",
+                                    "$ref": "#/components/schemas/getforumbyid_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/404_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Edit a forum by id",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/editforum_request"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type" : "object",
+                                    "$ref": "#/components/schemas/editforum_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }                
+            },
+            "delete" : {
+                "security": [{"ForumAuth": []}],
+                "summary": "Delete a forum by id",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type" : "object",
+                                    "$ref": "#/components/schemas/deleteforum_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }                
+            }
+        },
+        "/forums/{id_forum}/report": {
+            "post": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Report a forum by id",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/reportforum_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/reportforum_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/forums/{id_forum}/messages": {
+            "get": {
+                "summary": "Get all messages in a forum by id forum",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/getmessages_byidforum_response"
+                                }
+                            }
+                        }
+                    }
+                } 
+            },
+            "post": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Create a message in a forum by id forum",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/sendmessage_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/sendmessage_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/forums/{id_forum}/messages/{id_message}": {
+            "put": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Edit a message in a forum by id forum and id message",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "id_message",
+                        "in": "path",
+                        "description": "Message id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/editmessage_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/editmessage_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Delete a message in a forum by id forum and id message",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "id_message",
+                        "in": "path",
+                        "description": "Message id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/deletemessage_succes_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/forums/{id_forum}/messages/{id_message}/report": {
+            "post": {
+                "security": [{"ForumAuth": []}],
+                "summary": "Report a message in a forum by id forum and id message",
+                "parameters": [
+                    {
+                        "name": "id_forum",
+                        "in": "path",
+                        "description": "Forum id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "id_message",
+                        "in": "path",
+                        "description": "Message id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/reportmessage_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/reportmessage_success_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/400_response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/403_response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/500_response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "ForumAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization",
+                "description": "JWT token for forum API"
+            }
+        },
+        "schemas": {
+            "user_register_request": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "user1"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "example@mail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password-example"
+                    }
+                }
+            },
+            "user_register_succes_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "User registered"
+                    },
+                    "data" : {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "user_uuid" : {
+                                "type": "string",
+                                "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "user1"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "example@mail.com"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "********"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684763206  
+                            },
+                            "avatar": {
+                                "type": "string",
+                                "example": "default.png"
+                            },
+                            "status": {
+                                "type": "integer",
+                                "example": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "user_login_request": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "user1"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password-example"
+                    }
+                }
+            },
+            "user_login_succes_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Login success"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "type": "string",
+                                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ4NTAzODksImlhdCI6MTY4NDc2Mzk4OSwiaXNzIjoieHl6Zm9ydW0iLCJzdWIiOjJ9.rVDQjIN9P1EEYeqaMj7NU8_dB59eFGficQz4sm5mICY"
+                            }
+                        }
+                    }
+                }
+            },
+            "getforums_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "id_user": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "Forum salam olahraga"
+                                },
+                                "slug": {
+                                    "type": "string",
+                                    "example": "forum-salam-olahraga"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                                },
+                                "active_user": {
+                                    "type": "integer",
+                                    "example": 14500
+                                },
+                                "messages": {
+                                    "type": "integer",
+                                    "example": 14500
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "example": "2021-01-01 00:00:00"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "createforum_request": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Forum salam olahraga"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                    }
+                }
+            },
+            "createforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum created"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "id_user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "title": {
+                                "type": "string",
+                                "example": "Forum salam olahraga"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "forum-salam-olahraga"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                            },
+                            "created": {
+                                "type": "string",
+                                "example": "2021-01-01 00:00:00"
+                            }
+                        }
+                    }
+                }
+            },
+            "getforumbyid_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "id_user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "title": {
+                                "type": "string",
+                                "example": "Forum salam olahraga"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "forum-salam-olahraga"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                            },
+                            "active_user": {
+                                "type": "integer",
+                                "example": 14500
+                            },
+                            "messages": {
+                                "type": "integer",
+                                "example": 14500
+                            },
+                            "status": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created": {
+                                "type": "string",
+                                "example": "2021-01-01 00:00:00"
+                            }
+                        }
+                    }
+                }
+            },
+            "editforum_request": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Forum salam olahraga"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "forum salam olahraga adalah forum untuk membahas segala yang terkait dengan baku hantam, seperti tinju, kickboxing, muay thai, dan lain-lain"
+                    }
+                }
+            },
+            "editforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum updated"
+                    },
+                    "data": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "deleteforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum deleted"
+                    }
+                }
+            },
+            "reportforum_request": {
+                "type": "object",
+                "properties": {
+                    "problem": {
+                        "type": "string",
+                        "example": "This is inappropriate"
+                    }
+                }
+            },
+            "reportforum_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum reported"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id_forum": {
+                                "type": "integer",
+                                "example": 400
+                            },
+                            "id_owner": {
+                                "type": "integer",
+                                "example": 15
+                            },
+                            "id_reporter": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "problem": {
+                                "type": "string",
+                                "example": "This is inappropriate"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684769391
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684769391
+                            }
+                        }
+                    }
+                }
+            },
+            "getmessages_byidforum_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forum reported"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1599
+                                },
+                                "id_forum": {
+                                    "type": "integer",
+                                    "example": 1259
+                                },
+                                "id_user": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Salam olahraga, jaya jaya"
+                                },
+                                "created": {
+                                    "type": "integer",
+                                    "example": 1684221096
+                                },
+                                "updated": {
+                                    "type": "integer",
+                                    "example": 1684221096
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "sendmessage_request": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Salam olahraga"
+                    }
+                }
+            },
+            "sendmessage_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id_forum": {
+                                "type": "integer",
+                                "example": 1259
+                            },
+                            "id_user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Salam olahraga"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684221096
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684221096
+                            }
+                        }
+                    }
+                }
+            },
+            "editmessage_request": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Salam olahraga jaya jaya bravo"
+                    }
+                }
+            }, 
+            "editmessage_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Message updated"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string",
+                                "example": "Salam olahraga jaya jaya bravo"
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684221096
+                            }
+                        }
+                    }
+                }
+            },
+            "deletemessage_succes_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Message deleted"
+                    }
+                }
+            },
+            "reportmessage_request": {
+                "type": "object",
+                "properties": {
+                    "problem": {
+                        "type": "string",
+                        "example": "This is inappropriate"
+                    }
+                }
+            },
+            "reportmessage_success_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": "200"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Message reported"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id_message": {
+                                "type": "integer",
+                                "example": 1599
+                            },
+                            "id_owner": {
+                                "type": "integer",
+                                "example": 15
+                            },
+                            "id_reporter": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "problem": {
+                                "type": "string",
+                                "example": "This is inappropriate"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 1684769391
+                            },
+                            "updated": {
+                                "type": "integer",
+                                "example": 1684769391
+                            }
+                        }
+                    }
+                }
+            },
+            "400_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 400
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Bad Request"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "[field name] is required"
+                        }
+                    }
+                }
+            },
+            "401_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 401
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Username or password are invalid"
+                    },
+                    "data": {
+                        
+                    }
+                }
+            },
+            "403_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 403
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Forbidden"
+                    },
+                    "data": {
+
+                    }
+                }
+            },
+            "404_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 404
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Not Found"
+                    },
+                    "data": {
+
+                    }
+                }
+            },
+            "500_response": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    },
+                    "data": {
+
+                    }
+                }
+            }
+        }
+    }
+}
