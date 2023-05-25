@@ -118,6 +118,8 @@ Database on this REST API consists of 7 tables
     |_____message_handler.go
     |_____report_forum_handler.go
     |_____report_message_handler.go
+    |__middleware
+    |_____jwt_middleware.go
     |__models
     |_____forum.go
     |_____message.go
