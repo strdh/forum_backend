@@ -96,7 +96,7 @@ func (userModel *UserModel) UserForums(idUser int) []Forum {
     var forums []Forum
     var temp Forum
 
-    rows, err := config.DB.Query("SELECT * FROM forums WHERE id_user = ?", idUser)
+    rows, err := config.DB.Query("SELECT * FROM forums WHERE id_user = ? ORDER BY created ASC LIMIT 15", idUser)
     if err != nil {
         log.Println(err)
     }
@@ -118,7 +118,7 @@ func (userModel *UserModel) UserMessages(idUser int) []Message {
     var messages []Message
     var temp Message
 
-    rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id_user = ?", idUser)
+    rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id_user = ? ORDER BY created ASC LIMIT 15", idUser)
     if err != nil {
         log.Println(err)
     }
