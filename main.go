@@ -54,7 +54,10 @@ func main() {
     
     router.HandleFunc("/register", authHandler.Register).Methods("POST", "OPTIONS")
     router.HandleFunc("/login", authHandler.Login).Methods("POST", "OPTIONS")
+
     router.HandleFunc("/profile/{username}", middleware.AuthMiddleware(authHandler.Profile)).Methods("GET", "OPTIONS")
+    router.HandleFunc("/profile/{username}/nextforum/{created}", middleware.AuthMiddleware(authHandler.NextForum)).Methods("GET", "OPTIONS")
+    router.HandleFunc("/profile/{username}/nextmsg/{id_msg}", middleware.AuthMiddleware(authHandler.NextMsg)).Methods("GET", "OPTIONS")
 
     router.HandleFunc("/forums", forumHandler.Forums).Methods("GET", "OPTIONS")
     router.HandleFunc("/forums", middleware.AuthMiddleware(forumHandler.Create)).Methods("POST", "OPTIONS")

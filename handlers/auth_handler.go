@@ -3,6 +3,7 @@ package handlers
 import (
     "os"
     "time"
+    "strconv"
     "net/http"
     "io/ioutil"
     "encoding/json"
@@ -170,4 +171,49 @@ func (handler *AuthHandler) Profile(w http.ResponseWriter, r *http.Request) {
     }
 
     utils.WriteResponse(w, r, http.StatusOK, "Success", userProfile)
+}
+
+func (handler *AuthHandler) NextMsg(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
+        return
+    }
+
+    var messages []models.Message
+
+    username := mux.Vars(r)["username"]
+    idMsg := mux.Vars(r)["id_msg"]
+    finalIdMsg, _ := strconv.Atoi(idMsg)
+
+    id, err := handler.UserModel.GetId(username)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusNotFound, "User not found", nil)
+        return
+    }
+
+    messages = handler.UserModel.UserMessagesN(id, finalIdMsg)
+
+    utils.WriteResponse(w, r, http.StatusOK, "Success", messages)
+}
+
+func (handler *AuthHandler) NextForum(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        utils.WriteResponse(w, r, http.StatusMethodNotAllowed, "Method not allowed", nil)
+        return
+    }
+
+    var forums []models.Forum
+    username := mux.Vars(r)["username"]
+    created := mux.Vars(r)["created"]
+    finalCreated, _ := strconv.Atoi(created)
+
+    id, err := handler.UserModel.GetId(username)
+    if err != nil {
+        utils.WriteResponse(w, r, http.StatusNotFound, "User not found", nil)
+        return
+    }
+
+    forums = handler.UserModel.UserForumsN(id, finalCreated)
+
+    utils.WriteResponse(w, r, http.StatusOK, "Success", forums)
 }

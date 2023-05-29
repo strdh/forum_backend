@@ -92,11 +92,23 @@ func (userModel *UserModel) Delete(id int) (int64, error) {
     return rowsAffected, nil
 }
 
+func (userModel *UserModel) GetId(username string) (int, error) {
+    var id int
+    row := config.DB.QueryRow("SELECT id FROM users WHERE username = ?", username);
+    err := row.Scan(&id)
+    if err != nil {
+        log.Println(err)
+        return 0, errors.New("User not found")
+    }
+
+    return id, nil
+}
+
 func (userModel *UserModel) UserForums(idUser int) []Forum {
     var forums []Forum
     var temp Forum
 
-    rows, err := config.DB.Query("SELECT * FROM forums WHERE id_user = ? ORDER BY created ASC LIMIT 15", idUser)
+    rows, err := config.DB.Query("SELECT * FROM forums WHERE id_user = ? ORDER BY created DESC LIMIT 16", idUser)
     if err != nil {
         log.Println(err)
     }
@@ -118,7 +130,51 @@ func (userModel *UserModel) UserMessages(idUser int) []Message {
     var messages []Message
     var temp Message
 
-    rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id_user = ? ORDER BY created ASC LIMIT 15", idUser)
+    rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id_user = ? ORDER BY created DESC LIMIT 16", idUser)
+    if err != nil {
+        log.Println(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err := rows.Scan(&temp.Id, &temp.IdForum, &temp.IdUser, &temp.Message, &temp.Created, &temp.Updated)
+        if err != nil {
+            log.Println(err)
+        }
+
+        messages = append(messages, temp)
+    }
+
+    return messages
+}
+
+func (userModel *UserModel) UserForumsN(idUser int, created int) []Forum {
+    var forums []Forum
+    var temp Forum
+
+    rows, err := config.DB.Query("SELECT * FROM forums WHERE id_user = ? AND created <= ? ORDER BY created DESC LIMIT 16", idUser, created)
+    if err != nil {
+        log.Println(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err := rows.Scan(&temp.Id, &temp.IdUser, &temp.Title, &temp.Slug, &temp.Description, &temp.ActiveUsers, &temp.Messages, &temp.Status, &temp.Created)
+        if err != nil {
+            log.Println(err)
+        }
+
+        forums = append(forums, temp)
+    }
+
+    return forums
+}
+
+func (userModel *UserModel) UserMessagesN(idUser int, idMsg int) []Message {
+    var messages []Message
+    var temp Message
+
+    rows, err := config.DB.Query("SELECT * FROM forum_messages WHERE id >= ? AND id_user < ? ORDER BY id ASC LIMIT 16", idMsg, idUser)
     if err != nil {
         log.Println(err)
     }
